@@ -25,7 +25,8 @@
 get <- function(value = NULL,
                 config = Sys.getenv("R_CONFIG_ACTIVE", "default"),
                 file = Sys.getenv("R_CONFIG_FILE", "config.yml"),
-                use_parent = TRUE) {
+                use_parent = TRUE,
+                encoding = "UTF-8") {
 
   # find the file (scan parent directories above if need be)
   file <- normalizePath(file, mustWork = FALSE)
@@ -52,8 +53,8 @@ get <- function(value = NULL,
   }
 
   # load the yaml
-  config_yaml <- yaml::yaml.load_file(
-    file, eval.expr = TRUE
+  config_yaml <- yaml::read_yaml(
+    file, eval.expr = TRUE, fileEncoding = encoding,
   )
 
   # get the default config (required)
